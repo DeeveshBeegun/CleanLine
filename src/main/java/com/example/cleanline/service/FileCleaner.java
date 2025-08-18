@@ -22,6 +22,7 @@ public class FileCleaner {
      */
     public void removeEmptyLines(File inputFile) throws IOException {
         File tempFile = new File(inputFile.getName()+".tmp");
+        String originalPath = inputFile.getAbsolutePath();
         try(BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(inputFile), UTF8));
             PrintWriter printWriter = new PrintWriter(new OutputStreamWriter(new FileOutputStream(tempFile), UTF8))) {
                 String line = null; 
@@ -34,7 +35,7 @@ public class FileCleaner {
             e.printStackTrace();
         }
         fileUtils.deleteFile(inputFile);
-        fileUtils.moveFile(tempFile.toPath(), Paths.get(tempFile.getAbsolutePath().substring(0, (tempFile.getAbsolutePath().length()) - 4)));
+        fileUtils.moveFile(tempFile.toPath(), Paths.get(originalPath));
     }
 
     /*
@@ -42,6 +43,7 @@ public class FileCleaner {
      */
     public void removeDuplicateLines(File inputFile) throws IOException {
         File tempFile = new File(inputFile.getName()+".tmp");
+        String originalPath = inputFile.getAbsolutePath();
         try(BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(inputFile), UTF8));
             PrintWriter printWriter = new PrintWriter(new OutputStreamWriter(new FileOutputStream(tempFile), UTF8))) {
                 String line = null; 
@@ -56,8 +58,7 @@ public class FileCleaner {
                 e.printStackTrace();
             }
             fileUtils.deleteFile(inputFile); 
-            fileUtils.moveFile(tempFile.toPath(), Paths.get(tempFile.getAbsolutePath().substring(0, (tempFile.getAbsolutePath().length()) - 4)));
-
+            fileUtils.moveFile(tempFile.toPath(), Paths.get(originalPath));
     }
 
     /*
