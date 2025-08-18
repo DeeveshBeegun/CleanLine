@@ -3,6 +3,7 @@ package com.example.cleanline.controller;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextArea;
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import com.example.cleanline.service.FileCleaner;
 import javafx.fxml.FXML;
@@ -24,11 +25,11 @@ public class FunctionalityController {
     private File selectedFile;
 
     @FXML
-    public void onProcessFileButtonClick() {
+    public void onProcessFileButtonClick() throws IOException {
         executeActions();
     }
 
-    public void executeActions() {
+    public void executeActions() throws IOException {
         FileCleaner fileCleaner = new FileCleaner();
 
         boolean isDuplicateChecked = false; 
@@ -40,7 +41,7 @@ public class FunctionalityController {
         if (isDuplicateChecked) {
             boolean isBackedUp = fileCleaner.backupFile(selectedFile);
             if (isBackedUp) {
-                fileCleaner.removeDuplicateLines(selectedFile.getAbsolutePath(), selectedFile.getAbsolutePath());
+                fileCleaner.removeDuplicateLines(selectedFile);
             } 
             else {
                 System.out.println("Could not process file. Backup failed");
@@ -49,7 +50,7 @@ public class FunctionalityController {
         if (isEmptyLineChecked) {
             boolean isBackedUp = fileCleaner.backupFile(selectedFile);
             if (isBackedUp) {
-               fileCleaner.removeEmptyLines(selectedFile.getAbsolutePath(), selectedFile.getAbsolutePath());
+               fileCleaner.removeEmptyLines(selectedFile);
             }
             else {
                 System.out.println("Could not process file. Backup failed");

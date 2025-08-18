@@ -15,7 +15,7 @@ import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 
 
-public class HelloController {
+public class MainController {
 
     FileCleaner fileCleaner = new FileCleaner();
     File file = null; 

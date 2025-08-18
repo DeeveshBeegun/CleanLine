@@ -10,23 +10,20 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.example.cleanline.utils.FileUtils;
+
 public class FileCleaner {
 
     public static final Charset UTF8 = Charset.forName("UTF-8");
-
-    public static void main(String[] args) {
-        FileCleaner fileCleaner = new FileCleaner();
-        fileCleaner.removeDuplicateLines("/Users/deeveshbeegun/Developer/Projects/cleanLine/test.txt", 
-        "/Users/deeveshbeegun/Developer/Projects/cleanLine/outputText.txt");
-
-    }
+    FileUtils fileUtils = new FileUtils();
 
     /*
      * Remove empty lines from a text file
      */
-    public void removeEmptyLines(String inputFile, String outputFile) {
+    public void removeEmptyLines(File inputFile) throws IOException {
+        File tempFile = new File(inputFile.getName()+".tmp");
         try(BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(inputFile), UTF8));
-            PrintWriter printWriter = new PrintWriter(new OutputStreamWriter(new FileOutputStream(outputFile), UTF8))) {
+            PrintWriter printWriter = new PrintWriter(new OutputStreamWriter(new FileOutputStream(tempFile), UTF8))) {
                 String line = null; 
                 while ((line = bufferedReader.readLine()) != null) {
                     if (line.isEmpty()) 
@@ -36,14 +33,17 @@ public class FileCleaner {
         } catch(IOException e) {
             e.printStackTrace();
         }
+        fileUtils.deleteFile(inputFile);
+        fileUtils.moveFile(tempFile.toPath(), Paths.get(tempFile.getAbsolutePath().substring(0, (tempFile.getAbsolutePath().length()) - 4)));
     }
 
     /*
      * Remove duplicate lines from a text file
      */
-    public void removeDuplicateLines(String inputFile, String outputFile) {
+    public void removeDuplicateLines(File inputFile) throws IOException {
+        File tempFile = new File(inputFile.getName()+".tmp");
         try(BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(inputFile), UTF8));
-            PrintWriter printWriter = new PrintWriter(new OutputStreamWriter(new FileOutputStream(outputFile), UTF8))) {
+            PrintWriter printWriter = new PrintWriter(new OutputStreamWriter(new FileOutputStream(tempFile), UTF8))) {
                 String line = null; 
                 Set<String> lines = new HashSet<String>();
                 while ((line = bufferedReader.readLine()) != null) {
@@ -55,6 +55,9 @@ public class FileCleaner {
             } catch(IOException e) {
                 e.printStackTrace();
             }
+            fileUtils.deleteFile(inputFile); 
+            fileUtils.moveFile(tempFile.toPath(), Paths.get(tempFile.getAbsolutePath().substring(0, (tempFile.getAbsolutePath().length()) - 4)));
+
     }
 
     /*
@@ -84,4 +87,5 @@ public class FileCleaner {
         
         return isBackedUp;
     }
+
 }
