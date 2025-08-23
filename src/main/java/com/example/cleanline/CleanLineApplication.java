@@ -10,7 +10,7 @@ import java.io.IOException;
 public class CleanLineApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(CleanLineApplication.class.getResource("main-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(CleanLineApplication.class.getResource("functionality-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 320, 240);
         stage.setTitle("CleanLine");
         stage.setScene(scene);

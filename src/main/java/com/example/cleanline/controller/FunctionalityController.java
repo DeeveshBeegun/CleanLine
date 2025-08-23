@@ -2,11 +2,15 @@ package com.example.cleanline.controller;
 
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.Button;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import com.example.cleanline.service.FileCleaner;
 import javafx.fxml.FXML;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import javafx.scene.Scene;
 
 public class FunctionalityController {
 
@@ -22,11 +26,35 @@ public class FunctionalityController {
     @FXML
     private TextArea processedFilePreview;
 
+    @FXML
+    private Button chooseFileButton;
+
     private File selectedFile;
 
     @FXML
     public void onProcessFileButtonClick() throws IOException {
         executeActions();
+    }
+
+    @FXML
+    private void onChooseFileButtonClick() {
+        // Determine stage from any node in the scene
+        Scene scene = unprocessedFilePreview != null ? unprocessedFilePreview.getScene() : null;
+        Stage stage = scene != null ? (Stage) scene.getWindow() : null;
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open file");
+        fileChooser.getExtensionFilters().addAll(
+            new FileChooser.ExtensionFilter("Text Files", "*.txt"),
+            new FileChooser.ExtensionFilter("CSV Files", "*.csv")
+        );
+        File file = fileChooser.showOpenDialog(stage);
+        if (file != null) {
+            setSelectedFile(file);
+            if (chooseFileButton != null) {
+                chooseFileButton.setVisible(false);
+                chooseFileButton.setManaged(false);
+            }
+        }
     }
 
     public void executeActions() throws IOException {
@@ -38,7 +66,7 @@ public class FunctionalityController {
         isDuplicateChecked = duplicates.isSelected();
         isEmptyLineChecked = emptyLines.isSelected();
         
-        if (isDuplicateChecked) {
+        if (isDuplicateChecked && (selectedFile != null)) {
             boolean isBackedUp = fileCleaner.backupFile(selectedFile);
             if (isBackedUp) {
                 fileCleaner.removeDuplicateLines(selectedFile);
@@ -46,16 +74,12 @@ public class FunctionalityController {
             else {
                 System.out.println("Could not process file. Backup failed");
             }
-        } 
-        if (isEmptyLineChecked) {
+        }
+        if (isEmptyLineChecked && (selectedFile != null)) {
             boolean isBackedUp = fileCleaner.backupFile(selectedFile);
             if (isBackedUp) {
                fileCleaner.removeEmptyLines(selectedFile);
-            }
-            else {
-                System.out.println("Could not process file. Backup failed");
-            }
-            
+            } 
         }
 
         previewSelectedFile(processedFilePreview, selectedFile);
@@ -66,7 +90,7 @@ public class FunctionalityController {
         previewSelectedFile(unprocessedFilePreview, file);
     }
 
-    public void previewSelectedFile(TextArea filePreview, File selectedFile) {
+    private void previewSelectedFile(TextArea filePreview, File selectedFile) {
         if (selectedFile != null && filePreview != null) {
             try {
                 String content = Files.readString(selectedFile.toPath());

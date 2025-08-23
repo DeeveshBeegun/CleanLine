@@ -25,12 +25,14 @@ public class FileCleaner {
         String originalPath = inputFile.getAbsolutePath();
         try(BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(inputFile), UTF8));
             PrintWriter printWriter = new PrintWriter(new OutputStreamWriter(new FileOutputStream(tempFile), UTF8))) {
+                System.out.println("Removing empty lines");
                 String line = null; 
                 while ((line = bufferedReader.readLine()) != null) {
                     if (line.isEmpty()) 
                         continue; 
                     printWriter.println(line);
                 }
+                System.out.println("Empty lines removed");
         } catch(IOException e) {
             e.printStackTrace();
         }
@@ -46,6 +48,7 @@ public class FileCleaner {
         String originalPath = inputFile.getAbsolutePath();
         try(BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(inputFile), UTF8));
             PrintWriter printWriter = new PrintWriter(new OutputStreamWriter(new FileOutputStream(tempFile), UTF8))) {
+                System.out.println("Removing duplicate lines");
                 String line = null; 
                 Set<String> lines = new HashSet<String>();
                 while ((line = bufferedReader.readLine()) != null) {
@@ -54,6 +57,7 @@ public class FileCleaner {
                 for (String nonEmptyLine : lines) {
                     printWriter.println(nonEmptyLine);
                 }
+                System.out.println("Duplicate lines removed");
             } catch(IOException e) {
                 e.printStackTrace();
             }

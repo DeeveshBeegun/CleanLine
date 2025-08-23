@@ -5,6 +5,10 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Priority?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.geometry.Pos?>
 
 <?import javafx.scene.control.Button?>
 <VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
@@ -13,10 +17,24 @@
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
     </padding>
 
-    <TextArea fx:id="unprocessedFilePreview" editable="false" prefRowCount="20" prefColumnCount="50"/>
+    <HBox spacing="10">
+        <StackPane>
+            <HBox.hgrow>
+                ALWAYS
+            </HBox.hgrow>
+            <TextArea fx:id="unprocessedFilePreview" editable="false" prefRowCount="20" prefColumnCount="50" prefWidth="200" prefHeight="300" />
+            <Button fx:id="chooseFileButton" text="Choose File" onAction="#onChooseFileButtonClick" StackPane.alignment="CENTER" />
+        </StackPane>
+        <TextArea fx:id="processedFilePreview" editable="false" prefRowCount="20" prefColumnCount="50" prefWidth="200" prefHeight="300">
+            <HBox.hgrow>
+                ALWAYS
+            </HBox.hgrow>
+        </TextArea>
+    </HBox>
+    <HBox alignment="CENTER_LEFT">
+        <Label text="Clean Text"/>
+    </HBox>
     <CheckBox fx:id="duplicates" text="Remove Duplicates"/>
     <CheckBox fx:id="emptyLines" text="Remove Empty Lines"/>
     <Button text="Process File!" onAction="#onProcessFileButtonClick"/>
-    <TextArea fx:id="processedFilePreview" editable="false" prefRowCount="20" prefColumnCount="50"/>
-
 </VBox>
