@@ -37,8 +37,26 @@ public class FunctionalityController {
     }
 
     @FXML
+    public void onClearInputButtonClick() {
+        if (unprocessedFilePreview != null) {
+            unprocessedFilePreview.clear();
+        }
+        selectedFile = null;
+        if (chooseFileButton != null) {
+            chooseFileButton.setVisible(true);
+            chooseFileButton.setManaged(true);
+            chooseFileButton.toFront();
+            chooseFileButton.requestFocus();
+        }
+    }
+
+    @FXML
+    public void onDownloadOutputButtonClick() {
+        System.out.println("Download file");
+    }
+
+    @FXML
     private void onChooseFileButtonClick() {
-        // Determine stage from any node in the scene
         Scene scene = unprocessedFilePreview != null ? unprocessedFilePreview.getScene() : null;
         Stage stage = scene != null ? (Stage) scene.getWindow() : null;
         FileChooser fileChooser = new FileChooser();
@@ -66,7 +84,7 @@ public class FunctionalityController {
         isDuplicateChecked = duplicates.isSelected();
         isEmptyLineChecked = emptyLines.isSelected();
         
-        if (isDuplicateChecked && (selectedFile != null)) {
+        if (isDuplicateChecked) {
             boolean isBackedUp = fileCleaner.backupFile(selectedFile);
             if (isBackedUp) {
                 fileCleaner.removeDuplicateLines(selectedFile);
@@ -74,12 +92,16 @@ public class FunctionalityController {
             else {
                 System.out.println("Could not process file. Backup failed");
             }
-        }
-        if (isEmptyLineChecked && (selectedFile != null)) {
+        } 
+        if (isEmptyLineChecked) {
             boolean isBackedUp = fileCleaner.backupFile(selectedFile);
             if (isBackedUp) {
                fileCleaner.removeEmptyLines(selectedFile);
-            } 
+            }
+            else {
+                System.out.println("Could not process file. Backup failed");
+            }
+            
         }
 
         previewSelectedFile(processedFilePreview, selectedFile);
