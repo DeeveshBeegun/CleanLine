@@ -24,4 +24,21 @@ public class FileUtils {
         System.out.println("Moving file from " + sourcePath.toString() + " to " + targetPath.toString());
         Files.move(sourcePath, targetPath, StandardCopyOption.REPLACE_EXISTING);
     }
+
+    public String readFileContent(File inputFile) {
+        String fileContent = null;
+        if (inputFile != null) {
+            try {
+                System.out.println("Reading file Content");
+                fileContent = Files.readString(inputFile.toPath());
+            } catch(IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return fileContent;
+    }
+
+    public void writeFileContentToFile(File outputFile) {
+        
+    }
 }

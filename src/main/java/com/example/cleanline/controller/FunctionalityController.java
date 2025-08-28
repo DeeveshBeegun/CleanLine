@@ -7,6 +7,8 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import com.example.cleanline.service.FileCleaner;
+import com.example.cleanline.utils.FileUtils;
+
 import javafx.fxml.FXML;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -30,6 +32,8 @@ public class FunctionalityController {
     private Button chooseFileButton;
 
     private File selectedFile;
+
+    private String unprocessedFileContent;
 
     @FXML
     public void onProcessFileButtonClick() throws IOException {
@@ -72,11 +76,15 @@ public class FunctionalityController {
                 chooseFileButton.setVisible(false);
                 chooseFileButton.setManaged(false);
             }
+        FileUtils fileUtils = new FileUtils();
+        unprocessedFileContent = fileUtils.readFileContent(file);
         }
     }
 
     public void executeActions() throws IOException {
         FileCleaner fileCleaner = new FileCleaner();
+
+        String processedFileContent = null;
 
         boolean isDuplicateChecked = false; 
         boolean isEmptyLineChecked = false; 
@@ -85,26 +93,13 @@ public class FunctionalityController {
         isEmptyLineChecked = emptyLines.isSelected();
         
         if (isDuplicateChecked) {
-            boolean isBackedUp = fileCleaner.backupFile(selectedFile);
-            if (isBackedUp) {
-                fileCleaner.removeDuplicateLines(selectedFile);
-            } 
-            else {
-                System.out.println("Could not process file. Backup failed");
-            }
+            processedFileContent = fileCleaner.removeDuplicateLines(unprocessedFileContent);
         } 
         if (isEmptyLineChecked) {
-            boolean isBackedUp = fileCleaner.backupFile(selectedFile);
-            if (isBackedUp) {
-               fileCleaner.removeEmptyLines(selectedFile);
-            }
-            else {
-                System.out.println("Could not process file. Backup failed");
-            }
-            
+            processedFileContent = fileCleaner.removeEmptyLines(unprocessedFileContent);   
         }
 
-        previewSelectedFile(processedFilePreview, selectedFile);
+        previewContent(processedFilePreview, processedFileContent);
     }
 
     public void setSelectedFile(File file) {
@@ -121,5 +116,14 @@ public class FunctionalityController {
                 filePreview.setText("Error reading file: " + e.getMessage());
             }
         }
+    }
+
+    private void previewContent(TextArea filePreview, String fileContent) {
+        try {
+            filePreview.setText(fileContent);
+        } catch(Exception e) {
+            filePreview.setText("Error reading content: " + e.getMessage());
+        }
+        
     }
 }
