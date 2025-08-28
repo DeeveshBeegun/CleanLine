@@ -35,6 +35,11 @@ public class FunctionalityController {
 
     private String unprocessedFileContent;
 
+    private String processedFileContent = null;
+
+    FileUtils fileUtils = new FileUtils();
+
+
     @FXML
     public void onProcessFileButtonClick() throws IOException {
         executeActions();
@@ -56,8 +61,24 @@ public class FunctionalityController {
 
     @FXML
     public void onDownloadOutputButtonClick() {
-        System.out.println("Download file");
-    }
+        String content = processedFileContent != null ? processedFileContent : "";
+
+        Scene scene = processedFilePreview != null ? processedFilePreview.getScene() : null; 
+        Stage stage = scene != null ? (Stage) scene.getWindow() : null; 
+        
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save File");
+        fileChooser.getExtensionFilters().addAll(
+            new FileChooser.ExtensionFilter("Text Files", "*.txt"),
+            new FileChooser.ExtensionFilter("CSV Files", "*.csv"),
+            new FileChooser.ExtensionFilter("All Files", "*.*")
+        );
+
+        File fileDest = fileChooser.showSaveDialog(stage); 
+        if (fileDest != null) {
+            fileUtils.writeFileContentToFile(fileDest, content);
+        }
+    }   
 
     @FXML
     private void onChooseFileButtonClick() {
@@ -76,15 +97,12 @@ public class FunctionalityController {
                 chooseFileButton.setVisible(false);
                 chooseFileButton.setManaged(false);
             }
-        FileUtils fileUtils = new FileUtils();
         unprocessedFileContent = fileUtils.readFileContent(file);
         }
     }
 
     public void executeActions() throws IOException {
         FileCleaner fileCleaner = new FileCleaner();
-
-        String processedFileContent = null;
 
         boolean isDuplicateChecked = false; 
         boolean isEmptyLineChecked = false; 

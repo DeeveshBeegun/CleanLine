@@ -2,9 +2,11 @@ package com.example.cleanline.utils;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.nio.file.StandardOpenOption;
 
 public class FileUtils {
 
@@ -38,7 +40,13 @@ public class FileUtils {
         return fileContent;
     }
 
-    public void writeFileContentToFile(File outputFile) {
-        
+    public void writeFileContentToFile(File outputFile, String content) {
+        try {
+            Files.writeString(outputFile.toPath(), content, StandardCharsets.UTF_8, 
+            StandardOpenOption.CREATE, 
+            StandardOpenOption.TRUNCATE_EXISTING);
+        } catch (IOException e) {
+            System.out.println("Failed to download file: " + e.getMessage());
+        }
     }
 }
