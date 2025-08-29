@@ -39,6 +39,48 @@ public class FileCleaner {
         return nonEmpty;
     }
 
+    public String removeLineBreaks(String unprocessedFileContent) {
+        System.out.println("Removing line breaks");
+        String noBreaks = unprocessedFileContent.lines()
+        .map(String::trim)
+        .filter(s -> !s.isEmpty())
+        .collect(Collectors.joining(" "));
+        System.out.println("Line break removed");
+
+        return noBreaks;
+
+    }
+
+    public String convertToUppercase(String unprocessedFileContent) {
+        System.out.println("Converting to uppercase"); 
+        String uppercaseString = unprocessedFileContent.lines()
+        .map(String::toUpperCase)
+        .collect(Collectors.joining(System.lineSeparator()));
+        System.out.println("Line converted to uppercase");
+
+        return uppercaseString;
+    }
+
+    public String convertToLowercase(String unprocessedFileContent) {
+        System.out.println("Converting to lowercase");
+        String lowercaseString = unprocessedFileContent.lines()
+        .map(String::toLowerCase)
+        .collect(Collectors.joining(System.lineSeparator()));
+        System.out.println("Line converted to lowercase");
+
+        return lowercaseString; 
+    }
+
+    public String removeWhiteSpace(String unprocessedFileContent) {
+        System.out.println("Removing white space");
+        String nonWhiteSpace = unprocessedFileContent.lines()
+        .map(String::trim)
+        .collect(Collectors.joining());
+        System.out.println("White space removed");
+        
+        return nonWhiteSpace;
+    }
+
     /*
      * Remove empty lines from a text file
      */
@@ -126,5 +168,6 @@ public class FileCleaner {
 
         return isBackedUp;
     }
+
 
 }
