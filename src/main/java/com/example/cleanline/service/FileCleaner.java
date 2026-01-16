@@ -48,7 +48,6 @@ public class FileCleaner {
         System.out.println("Line break removed");
 
         return noBreaks;
-
     }
 
     public String convertToUppercase(String unprocessedFileContent) {
@@ -80,61 +79,6 @@ public class FileCleaner {
         
         return nonWhiteSpace;
     }
-
-    /*
-     * Remove empty lines from a text file
-     */
-    @Deprecated
-    public void removeEmptyLinesAndWriteToFile(File inputFile) throws IOException {
-        File tempFile = new File(inputFile.getName()+".tmp");
-        String originalPath = inputFile.getAbsolutePath();
-        try(BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(inputFile), UTF8));
-            PrintWriter printWriter = new PrintWriter(new OutputStreamWriter(new FileOutputStream(tempFile), UTF8))) {
-                System.out.println("Removing empty lines");
-                String line = null; 
-                while ((line = bufferedReader.readLine()) != null) {
-                    if (line.isEmpty()) 
-                        continue; 
-                    printWriter.println(line);
-                }
-                System.out.println("Empty lines removed");
-        } catch(IOException e) {
-            e.printStackTrace();
-        }
-        fileUtils.deleteFile(inputFile);
-        fileUtils.moveFile(tempFile.toPath(), Paths.get(originalPath));
-    }
-
-    /*
-     * Remove duplicate lines from a text file
-     */
-    @Deprecated
-    public void removeDuplicateLinesAndWriteToFile(File inputFile) throws IOException {
-        if (inputFile != null) {
-            File tempFile = new File(inputFile.getName()+".tmp");
-            String originalPath = inputFile.getAbsolutePath();
-            try(BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(inputFile), UTF8));
-                PrintWriter printWriter = new PrintWriter(new OutputStreamWriter(new FileOutputStream(tempFile), UTF8))) {
-                    System.out.println("Removing duplicate lines");
-                    String line = null; 
-                    Set<String> lines = new HashSet<String>();
-                    while ((line = bufferedReader.readLine()) != null) {
-                        lines.add(line);
-                    }
-                    for (String nonEmptyLine : lines) {
-                        printWriter.println(nonEmptyLine);
-                    }
-                    System.out.println("Duplicate lines removed");
-                } catch(IOException e) {
-                    e.printStackTrace();
-                }
-                fileUtils.deleteFile(inputFile); 
-                fileUtils.moveFile(tempFile.toPath(), Paths.get(originalPath));
-        }
-        else {
-            System.out.println("Input file is null");
-        }
-     }
 
     /*
      * Backup file

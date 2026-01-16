@@ -22,6 +22,18 @@ public class FunctionalityController {
     @FXML
     private CheckBox emptyLines;
 
+    @FXML 
+    private CheckBox lineBreaks; 
+
+    @FXML 
+    private CheckBox uppercase; 
+
+    @FXML
+    private CheckBox lowercase; 
+
+    @FXML 
+    private CheckBox whiteSpace; 
+
     @FXML
     private TextArea unprocessedFilePreview;
 
@@ -106,15 +118,35 @@ public class FunctionalityController {
 
         boolean isDuplicateChecked = false; 
         boolean isEmptyLineChecked = false; 
+        boolean isLineBreaksChecked = false; 
+        boolean isConvertToUpperCaseChecked = false; 
+        boolean isConvertToLowerCaseChecked = false; 
+        boolean isRemoveWhiteSpaceChecked = false; 
 
         isDuplicateChecked = duplicates.isSelected();
         isEmptyLineChecked = emptyLines.isSelected();
+        isLineBreaksChecked = lineBreaks.isSelected();
+        isConvertToLowerCaseChecked = lowercase.isSelected(); 
+        isConvertToUpperCaseChecked = uppercase.isSelected();
+        isRemoveWhiteSpaceChecked = whiteSpace.isSelected();
         
         if (isDuplicateChecked) {
             processedFileContent = fileCleaner.removeDuplicateLines(unprocessedFileContent);
         } 
         if (isEmptyLineChecked) {
             processedFileContent = fileCleaner.removeEmptyLines(unprocessedFileContent);   
+        }
+        if (isLineBreaksChecked) {
+            processedFileContent = fileCleaner.removeLineBreaks(unprocessedFileContent);
+        } 
+        if (isConvertToLowerCaseChecked) {
+            processedFileContent = fileCleaner.convertToLowercase(unprocessedFileContent);
+        }
+        if (isConvertToUpperCaseChecked) {
+            processedFileContent = fileCleaner.convertToUppercase(unprocessedFileContent);
+        }
+        if (isRemoveWhiteSpaceChecked) {
+            processedFileContent = fileCleaner.removeWhiteSpace(unprocessedFileContent);
         }
 
         previewContent(processedFilePreview, processedFileContent);

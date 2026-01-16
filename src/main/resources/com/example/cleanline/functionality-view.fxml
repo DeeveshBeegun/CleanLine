@@ -45,6 +45,26 @@
                 <Insets top="4.0" right="4.0" bottom="4.0" left="4.0"/>
             </HBox.margin>
         </CheckBox>
+         <CheckBox fx:id="lineBreaks" text="Remove Line breaks">
+            <HBox.margin>
+                <Insets top="4.0" right="4.0" bottom="4.0" left="4.0"/>
+            </HBox.margin>
+        </CheckBox>
+         <CheckBox fx:id="uppercase" text="Convert to uppercase">
+            <HBox.margin>
+                <Insets top="4.0" right="4.0" bottom="4.0" left="4.0"/>
+            </HBox.margin>
+        </CheckBox>
+         <CheckBox fx:id="lowercase" text="Convert to lowercase">
+            <HBox.margin>
+                <Insets top="4.0" right="4.0" bottom="4.0" left="4.0"/>
+            </HBox.margin>
+        </CheckBox>
+        <CheckBox fx:id="whiteSpace" text="Trim white space">
+            <HBox.margin>
+                <Insets top="4.0" right="4.0" bottom="4.0" left="4.0"/>
+            </HBox.margin>
+        </CheckBox>
     </HBox>
     <HBox alignment="CENTER" spacing="12.0">
         <Button text="Clear Input" onAction="#onClearInputButtonClick"/>
