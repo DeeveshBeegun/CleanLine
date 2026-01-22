@@ -1,16 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Priority?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.geometry.Pos?>
-
-<?import javafx.scene.control.Button?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.example.cleanline.controller.FunctionalityController">
     <padding>
@@ -34,33 +26,33 @@
     <HBox alignment="CENTER_LEFT">
         <Label text="Clean Text"/>
     </HBox>
-    <HBox alignment="CENTER_LEFT" spacing="12.0">
-        <CheckBox fx:id="duplicates" text="Remove Duplicates">
+    <HBox alignment="CENTER" spacing="12.0">
+        <CheckBox fx:id="duplicatesCheckBox" text="Remove Duplicates">
             <HBox.margin>
                 <Insets top="4.0" right="4.0" bottom="4.0" left="4.0"/>
             </HBox.margin>
         </CheckBox>
-        <CheckBox fx:id="emptyLines" text="Remove Empty Lines">
+        <CheckBox fx:id="emptyLinesCheckBox" text="Remove Empty Lines">
             <HBox.margin>
                 <Insets top="4.0" right="4.0" bottom="4.0" left="4.0"/>
             </HBox.margin>
         </CheckBox>
-         <CheckBox fx:id="lineBreaks" text="Remove Line breaks">
+         <CheckBox fx:id="lineBreaksCheckBox" text="Remove Line breaks">
             <HBox.margin>
                 <Insets top="4.0" right="4.0" bottom="4.0" left="4.0"/>
             </HBox.margin>
         </CheckBox>
-         <CheckBox fx:id="uppercase" text="Convert to uppercase">
+         <CheckBox fx:id="uppercaseCheckBox" text="Convert to uppercase">
             <HBox.margin>
                 <Insets top="4.0" right="4.0" bottom="4.0" left="4.0"/>
             </HBox.margin>
         </CheckBox>
-         <CheckBox fx:id="lowercase" text="Convert to lowercase">
+         <CheckBox fx:id="lowercaseCheckBox" text="Convert to lowercase">
             <HBox.margin>
                 <Insets top="4.0" right="4.0" bottom="4.0" left="4.0"/>
             </HBox.margin>
         </CheckBox>
-        <CheckBox fx:id="whiteSpace" text="Trim white space">
+        <CheckBox fx:id="whiteSpaceCheckBox" text="Trim white space">
             <HBox.margin>
                 <Insets top="4.0" right="4.0" bottom="4.0" left="4.0"/>
             </HBox.margin>
@@ -69,6 +61,7 @@
     <HBox alignment="CENTER" spacing="12.0">
         <Button text="Clear Input" onAction="#onClearInputButtonClick"/>
         <Button text="Process File" onAction="#onProcessFileButtonClick"/>
-        <Button text="Download Output" onAction="#onDownloadOutputButtonClick"/>
+        <Button fx:id="downloadButton" disable="true" text="Download Output" onAction="#onDownloadOutputButtonClick"/>
+        <Button text="Clear Output" onAction="#onClearOutputButtonClick"/>
     </HBox>
 </VBox>

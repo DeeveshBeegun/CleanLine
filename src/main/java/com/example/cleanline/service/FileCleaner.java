@@ -1,25 +1,16 @@
 package com.example.cleanline.service;
 
-import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-import com.example.cleanline.utils.FileUtils;
-
 public class FileCleaner {
 
     public static final Charset UTF8 = StandardCharsets.UTF_8;
-    FileUtils fileUtils = new FileUtils();
 
-    private static Logger logger = Logger.getLogger(FileCleaner.class.getName());
+    private static final Logger logger = Logger.getLogger(FileCleaner.class.getName());
 
     public String removeDuplicateLines(String unprocessedFileContent) {
         logger.log(java.util.logging.Level.INFO, "Removing deduplicate lines");

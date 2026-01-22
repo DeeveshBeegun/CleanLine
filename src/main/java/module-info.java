@@ -13,4 +13,12 @@ module com.example.cleanline {
     exports com.example.cleanline;
     exports com.example.cleanline.controller;
     opens com.example.cleanline.controller to javafx.fxml;
+    exports com.example.cleanline.utils;
+    opens com.example.cleanline.utils to javafx.fxml;
+    exports com.example.cleanline.service;
+    opens com.example.cleanline.service to javafx.fxml;
+    exports com.example.cleanline.loader to javafx.graphics;
+    opens com.example.cleanline.loader to javafx.fxml;
+
+
 }
