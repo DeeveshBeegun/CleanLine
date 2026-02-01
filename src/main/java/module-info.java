@@ -17,8 +17,5 @@ module com.example.cleanline {
     opens com.example.cleanline.utils to javafx.fxml;
     exports com.example.cleanline.service;
     opens com.example.cleanline.service to javafx.fxml;
-    exports com.example.cleanline.loader to javafx.graphics;
-    opens com.example.cleanline.loader to javafx.fxml;
-
 
 }

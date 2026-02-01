@@ -30,8 +30,6 @@ public class CleanLineApplication extends Application {
     }
 
     public static void main(String[] args) {
-        System.setProperty("javafx.preloader", "com.example.cleanline.loader.CleanLinePreLoader");
-        launch(args);
+        launch();
     }
-
 }

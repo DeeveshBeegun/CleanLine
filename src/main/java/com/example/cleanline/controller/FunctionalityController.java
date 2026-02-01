@@ -46,6 +46,15 @@ public class FunctionalityController {
     @FXML
     private Button downloadButton;
 
+    @FXML
+    private Button clearOutputButton;
+
+    @FXML
+    private Button processButton;
+
+    @FXML
+    private Button clearInputButton;
+
     private File selectedFile;
 
     private String unprocessedFileContent;
@@ -55,6 +64,46 @@ public class FunctionalityController {
     FileUtils fileUtils = new FileUtils();
 
     private boolean isFileChosen = false;
+
+    public boolean isBoxChecked = false;
+
+    boolean isDuplicateChecked = false;
+
+    boolean isEmptyLineChecked = false;
+
+    boolean isLineBreaksChecked = false;
+
+    boolean isConvertToUpperCaseChecked = false;
+
+    boolean isConvertToLowerCaseChecked = false;
+
+    boolean isRemoveWhiteSpaceChecked = false;
+
+
+    @FXML
+    private void onChooseFileButtonClick() {
+        Scene scene = unprocessedFilePreview != null ? unprocessedFilePreview.getScene() : null;
+        Stage stage = scene != null ? (Stage) scene.getWindow() : null;
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open file");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("CSV and Text Files", "*.csv", "*.txt")
+        );
+        File file = fileChooser.showOpenDialog(stage);
+        if (file != null) {
+            setSelectedFile(file);
+            if (chooseFileButton != null) {
+                chooseFileButton.setVisible(false);
+                chooseFileButton.setManaged(false);
+            }
+            unprocessedFileContent = fileUtils.readFileContent(file);
+
+            if(unprocessedFileContent != null) {
+                clearInputButton.setDisable(false);
+                enableProcessButton();
+            }
+        }
+    }
 
     @FXML
     public void onProcessFileButtonClick() {
@@ -70,6 +119,9 @@ public class FunctionalityController {
     public void onClearInputButtonClick() {
         if (unprocessedFilePreview != null) {
             unprocessedFilePreview.clear();
+            unprocessedFileContent = null;
+            clearInputButton.setDisable(true);
+            enableProcessButton();
         }
         selectedFile = null;
         if (chooseFileButton != null) {
@@ -84,6 +136,9 @@ public class FunctionalityController {
     public void onClearOutputButtonClick() {
         if (processedFilePreview != null) {
             processedFilePreview.clear();
+            clearOutputButton.setDisable(true);
+            downloadButton.setDisable(true);
+            enableProcessButton();
         }
     }
 
@@ -108,36 +163,53 @@ public class FunctionalityController {
         }
     }   
 
-    @FXML
-    private void onChooseFileButtonClick() {
-        Scene scene = unprocessedFilePreview != null ? unprocessedFilePreview.getScene() : null;
-        Stage stage = scene != null ? (Stage) scene.getWindow() : null;
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Open file");
-        fileChooser.getExtensionFilters().addAll(
-            new FileChooser.ExtensionFilter("Text Files", "*.txt"),
-            new FileChooser.ExtensionFilter("CSV Files", "*.csv")
-        );
-        File file = fileChooser.showOpenDialog(stage);
-        if (file != null) {
-            setSelectedFile(file);
-            if (chooseFileButton != null) {
-                chooseFileButton.setVisible(false);
-                chooseFileButton.setManaged(false);
-            }
-        unprocessedFileContent = fileUtils.readFileContent(file);
+
+
+    public void enableProcessButton() {
+        if ((isDuplicateChecked || isEmptyLineChecked || isLineBreaksChecked || isConvertToLowerCaseChecked ||
+                isConvertToUpperCaseChecked || isRemoveWhiteSpaceChecked) && unprocessedFileContent != null) {
+            processButton.setDisable(false);
+        } else {
+            processButton.setDisable(true);
         }
     }
 
+    @FXML
+    public void onDuplicatesCheckBoxChecked() {
+        isDuplicateChecked = duplicatesCheckBox.isSelected();
+        enableProcessButton();
+    }
+
+    @FXML
+    public void onEmptyLinesCheckBoxChecked() {
+        isEmptyLineChecked = emptyLinesCheckBox.isSelected();
+        enableProcessButton();
+    }
+
+    @FXML
+    public void onLineBreaksCheckBoxChecked() {
+        isLineBreaksChecked = lineBreaksCheckBox.isSelected();
+        enableProcessButton();
+    }
+
+    @FXML
+    public void onUppercaseCheckBoxChecked() {
+        lowercaseCheckBox.setDisable(uppercaseCheckBox.isSelected());
+        enableProcessButton();
+    }
+
+    @FXML
+    public void onLowercaseCheckBoxChecked() {
+        uppercaseCheckBox.setDisable(lowercaseCheckBox.isSelected());
+        enableProcessButton();
+    }
+
+    public void onWhiteSpaceCheckBoxChecked() {
+        isRemoveWhiteSpaceChecked = whiteSpaceCheckBox.isSelected();
+        enableProcessButton();
+    }
     public void executeActions() {
         FileCleaner fileCleaner = new FileCleaner();
-
-        boolean isDuplicateChecked = false; 
-        boolean isEmptyLineChecked = false; 
-        boolean isLineBreaksChecked = false; 
-        boolean isConvertToUpperCaseChecked = false; 
-        boolean isConvertToLowerCaseChecked = false; 
-        boolean isRemoveWhiteSpaceChecked = false; 
 
         isDuplicateChecked = duplicatesCheckBox.isSelected();
         isEmptyLineChecked = emptyLinesCheckBox.isSelected();
@@ -168,9 +240,7 @@ public class FunctionalityController {
         if (isRemoveWhiteSpaceChecked) {
             processedFileContent = fileCleaner.removeWhiteSpace(processedFileContent);
         }
-
         previewContent(processedFilePreview, processedFileContent);
-
     }
 
     public void setSelectedFile(File file) {
@@ -191,6 +261,7 @@ public class FunctionalityController {
 
     private void previewContent(TextArea filePreview, String fileContent) {
         downloadButton.setDisable(false);
+        clearOutputButton.setDisable(false);
         try {
             filePreview.setText(fileContent);
         } catch(Exception e) {
@@ -198,4 +269,6 @@ public class FunctionalityController {
         }
         
     }
+
+
 }

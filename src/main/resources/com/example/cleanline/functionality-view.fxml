@@ -24,44 +24,44 @@
         </TextArea>
     </HBox>
     <HBox alignment="CENTER_LEFT">
-        <Label text="Clean Text"/>
+        <Label text="Clean File"/>
     </HBox>
     <HBox alignment="CENTER" spacing="12.0">
-        <CheckBox fx:id="duplicatesCheckBox" text="Remove Duplicates">
+        <CheckBox fx:id="duplicatesCheckBox" onAction="#onDuplicatesCheckBoxChecked" text="Remove Duplicates">
             <HBox.margin>
                 <Insets top="4.0" right="4.0" bottom="4.0" left="4.0"/>
             </HBox.margin>
         </CheckBox>
-        <CheckBox fx:id="emptyLinesCheckBox" text="Remove Empty Lines">
+        <CheckBox fx:id="emptyLinesCheckBox" onAction="#onEmptyLinesCheckBoxChecked" text="Remove Empty Lines">
             <HBox.margin>
                 <Insets top="4.0" right="4.0" bottom="4.0" left="4.0"/>
             </HBox.margin>
         </CheckBox>
-         <CheckBox fx:id="lineBreaksCheckBox" text="Remove Line breaks">
+         <CheckBox fx:id="lineBreaksCheckBox" onAction="#onLineBreaksCheckBoxChecked" text="Remove Line breaks">
             <HBox.margin>
                 <Insets top="4.0" right="4.0" bottom="4.0" left="4.0"/>
             </HBox.margin>
         </CheckBox>
-         <CheckBox fx:id="uppercaseCheckBox" text="Convert to uppercase">
+         <CheckBox fx:id="uppercaseCheckBox" onAction="#onUppercaseCheckBoxChecked" text="Convert to uppercase">
             <HBox.margin>
                 <Insets top="4.0" right="4.0" bottom="4.0" left="4.0"/>
             </HBox.margin>
         </CheckBox>
-         <CheckBox fx:id="lowercaseCheckBox" text="Convert to lowercase">
+         <CheckBox fx:id="lowercaseCheckBox" onAction="#onLowercaseCheckBoxChecked" text="Convert to lowercase">
             <HBox.margin>
                 <Insets top="4.0" right="4.0" bottom="4.0" left="4.0"/>
             </HBox.margin>
         </CheckBox>
-        <CheckBox fx:id="whiteSpaceCheckBox" text="Trim white space">
+        <CheckBox fx:id="whiteSpaceCheckBox" onAction="#onWhiteSpaceCheckBoxChecked" text="Trim white space">
             <HBox.margin>
                 <Insets top="4.0" right="4.0" bottom="4.0" left="4.0"/>
             </HBox.margin>
         </CheckBox>
     </HBox>
     <HBox alignment="CENTER" spacing="12.0">
-        <Button text="Clear Input" onAction="#onClearInputButtonClick"/>
-        <Button text="Process File" onAction="#onProcessFileButtonClick"/>
+        <Button fx:id="clearInputButton" disable="true" text="Clear Input" onAction="#onClearInputButtonClick"/>
+        <Button fx:id="processButton" disable="true" text="Process File" onAction="#onProcessFileButtonClick"/>
         <Button fx:id="downloadButton" disable="true" text="Download Output" onAction="#onDownloadOutputButtonClick"/>
-        <Button text="Clear Output" onAction="#onClearOutputButtonClick"/>
+        <Button fx:id="clearOutputButton" disable="true" text="Clear Output" onAction="#onClearOutputButtonClick"/>
     </HBox>
 </VBox>
